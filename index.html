@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10140f">
+  <meta name="description" content="Minecraft · Operation Black Zone 官方网站。探索战区，搜集物资，与队友一起完成任务。">
+  <title>Minecraft · Operation Black Zone</title>
+  <style>
+    :root {
+      --bg: #10140f;
+      --panel: #191f18;
+      --green: #b7e36a;
+      --text: #f2f4ed;
+      --muted: #a5afa0;
+      --border: #333d30;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 7%;
+      background: rgba(16,20,15,.96);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+    .brand span { color: var(--green); }
+    nav { display: flex; gap: 22px; flex-wrap: wrap; }
+    nav a { color: var(--muted); font-size: 14px; }
+    nav a:hover { color: var(--green); }
+
+    .hero {
+      min-height: 570px;
+      display: flex;
+      align-items: center;
+      padding: 80px 9%;
+      background:
+        linear-gradient(90deg, rgba(10,15,10,.98), rgba(10,15,10,.76)),
+        url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-content { max-width: 760px; }
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+    h1 {
+      margin: 18px 0;
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: 1.12;
+      letter-spacing: -2px;
+    }
+    h1 span { color: var(--green); }
+    .hero p { max-width: 620px; color: #c0c8bc; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border: 1px solid var(--green);
+      background: var(--green);
+      color: #17200e;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn.secondary { background: transparent; color: var(--text); border-color: #697463; }
+
+    .statusbar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .status {
+      padding: 23px 10px;
+      text-align: center;
+      background: var(--panel);
+    }
+    .status strong { display: block; color: var(--green); font-size: 18px; }
+    .status small { color: var(--muted); }
+
+    section { padding: 75px 9%; scroll-margin-top: 70px; }
+    .section-heading { margin-bottom: 30px; }
+    .section-heading h2 { margin: 5px 0; font-size: 30px; }
+    .section-heading p { color: var(--muted); margin: 0; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: var(--green); transform: translateY(-3px); }
+    .card .number { color: var(--green); font-size: 12px; letter-spacing: 2px; }
+    .card h3 { margin: 12px 0 8px; }
+    .card p { color: var(--muted); font-size: 14px; margin-bottom: 0; }
+
+    .server-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      padding: 32px;
+      background: #1a2117;
+      border: 1px solid var(--border);
+    }
+    .server-address {
+      padding: 13px;
+      margin: 15px 0;
+      background: #0c100b;
+      border: 1px dashed #65745a;
+      overflow-wrap: anywhere;
+      color: var(--green);
+      font-family: Consolas, monospace;
+    }
+    .note { font-size: 12px; color: var(--muted); }
+    .download-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding-bottom: 3px;
+      color: var(--green);
+      border-bottom: 1px solid var(--green);
+    }
+
+    footer {
+      padding: 30px 9%;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer strong { color: var(--text); }
+
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      nav { gap: 14px; }
+      .hero { min-height: 490px; padding: 65px 7%; }
+      section { padding: 55px 7%; }
+      .cards { grid-template-columns: 1fr; }
+      .server-panel { grid-template-columns: 1fr; padding: 22px; }
+      .status strong { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">OPERATION <span>BLACK ZONE</span></a>
+    <nav aria-label="主导航">
+      <a href="#home">首页</a>
+      <a href="#features">服务器特色</a>
+      <a href="#server">加入服务器</a>
+      <a href="#downloads">资源下载</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">MINECRAFT · SURVIVE THE UNKNOWN</div>
+        <h1>欢迎进入<br><span>黑区行动</span></h1>
+        <p>
+          搜索物资，探索未知区域，与队友并肩作战。
+          在这片危险的战区里，每一次行动都值得认真对待。
+        </p>
+        <div class="actions">
+          <a class="btn" href="#server">进入战区 →</a>
+          <a class="btn secondary" href="#features">了解玩法</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="statusbar">
+      <div class="status">
+        <strong>MINECRAFT</strong>
+        <small>游戏平台</small>
+      </div>
+      <div class="status">
+        <strong>TACTICAL</strong>
+        <small>战术生存</small>
+      </div>
+      <div class="status">
+        <strong>CO-OP</strong>
+        <small>团队行动</small>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="section-heading">
+        <div class="eyebrow">FIELD BRIEFING / 01</div>
+        <h2>战区行动指南</h2>
+        <p>做好准备，选择你的行动方式。</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="number">MISSION 01</div>
+          <h3>探索与搜集</h3>
+          <p>进入地图探索区域，寻找有价值的物资，规划每一次行动。</p>
+        </article>
+        <article class="card">
+          <div class="number">MISSION 02</div>
+          <h3>装备与生存</h3>
+          <p>准备装备和补给，谨慎面对危险，尽可能带着战利品返回。</p>
+        </article>
+        <article class="card">
+          <div class="number">MISSION 03</div>
+          <h3>团队协作</h3>
+          <p>与队友沟通、分配资源，共同完成任务并安全撤离。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="server">
+      <div class="section-heading">
+        <div class="eyebrow">SERVER INFORMATION / 02</div>
+        <h2>加入我们的服务器</h2>
+        <p>请将下面的示例信息替换成你自己的服务器资料。</p>
+      </div>
+
+      <div class="server-panel">
+        <div>
+          <h3>服务器连接信息</h3>
+          <div class="server-address" id="serverAddress">
+           sz.frp.one:19745
+          </div>
+          <button class="btn" id="copyButton" type="button">
+            复制服务器地址
+          </button>
+          <p class="note">
+          </p>
+        </div>
+        <div>
+          <h3>连接前请确认</h3>
+          <p>01 / 游戏版本与服务器一致</p>
+          <p>02 / 已安装服务器要求的模组</p>
+          <p>03 / 网络可以正常连接服务器</p>
+          <p class="note">官网可以介绍服务器，但不能代替 Minecraft 游戏服务器本身。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="downloads">
+      <div class="section-heading">
+        <div class="eyebrow">DOWNLOAD CENTER / 03</div>
+        <h2>资源下载中心</h2>
+        <p>把整合包、安装教程和社区地址集中在这里。</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="number">FILE 01</div>
+          <h3>游戏整合包</h3>
+          <p>在此添加整合包下载地址和版本说明。</p>
+          <a class="download-link" href="https://modrinth.com/"
+             target="_blank" rel="noopener noreferrer">查看下载平台 ↗</a>
+        </article>
+        <article class="card">
+          <div class="number">FILE 02</div>
+          <h3>安装教程</h3>
+          <p>在此添加新玩家安装游戏和模组的教程。</p>
+          <a class="download-link" href="#server">查看连接说明 ↑</a>
+        </article>
+        <article class="card">
+          <div class="number">FILE 03</div>
+          <h3>玩家社区</h3>
+          <p>加入群聊</p>
+          <a class="download-link" href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=KwdEIMd-eTvChq90IeZRqCiGCPblbCF-&authKey=OP0U8l0KdRP9ojOeMNN5wOEfpKtRHq%2FYAHdb8QZvBGoOA%2FFzrrWekzkxxdynNn9t&noverify=0&group_code=1128187098"
+             target="_blank" rel="noopener noreferrer">访问 Discord ↗</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>MINECRAFT · OPERATION BLACK ZONE</strong>
+    <p>玩家社区制作的非官方项目网站。Minecraft 是 Mojang Studios 的相关商标；
+    本网站与 Mojang 或 Microsoft 没有官方关联。</p>
+    <p>© <span id="year"></span> Operation Black Zone · 玩家社区</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    document.getElementById("copyButton").addEventListener("click", async () => {
+      const address =
+        document.getElementById("serverAddress").textContent.trim();
+      const button = document.getElementById("copyButton");
+
+      try {
+        await navigator.clipboard.writeText(address);
+        button.textContent = "复制成功！";
+      } catch (error) {
+        window.prompt("请手动复制服务器地址：", address);
+      }
+
+      setTimeout(() => {
+        button.textContent = "复制服务器地址";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
