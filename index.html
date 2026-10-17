@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#243b2a">
+  <meta name="description" content="Minecraft · Operation Black Zone 官方玩家社区网站。整合包下载、安装教程、公告和活动。">
+  <title>Minecraft · Operation Black Zone</title>
+  <style>
+    :root {
+      --sky: #a9d8e8;
+      --grass: #6aaa45;
+      --grass-dark: #3f7636;
+      --dirt: #795238;
+      --wood: #493523;
+      --panel: #f1e5c8;
+      --paper: #fff8e8;
+      --ink: #263322;
+      --muted: #5f6b51;
+      --gold: #f2c14e;
+      --shadow: #263322;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Microsoft YaHei", "Arial", sans-serif;
+      background-color: #dcecc7;
+      background-image: linear-gradient(45deg, rgba(84,132,59,.08) 25%, transparent 25%, transparent 75%, rgba(84,132,59,.08) 75%),
+                        linear-gradient(45deg, rgba(84,132,59,.08) 25%, transparent 25%, transparent 75%, rgba(84,132,59,.08) 75%);
+      background-position: 0 0, 12px 12px; background-size: 24px 24px;
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .pixel {
+      border: 3px solid #273522;
+      box-shadow: 4px 4px 0 rgba(38,51,34,.3);
+      border-radius: 0;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; padding: 12px max(5%, calc((100% - 1180px)/2));
+      background: #263b2a; color: #fff8e8; border-bottom: 5px solid #6aaa45;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; line-height: 1.25; }
+    .brand-icon { display: grid; place-items: center; width: 38px; height: 38px; background: #6aaa45; border: 3px solid #152518; box-shadow: inset -5px -5px #3f7636; font-size: 20px; }
+    .brand small { display: block; color: #c5dfb5; font-size: 10px; letter-spacing: 1px; margin-top: 3px; }
+    nav { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    nav a { color: #fff8e8; font-size: 13px; font-weight: 800; text-decoration: none; }
+    nav a:hover { color: var(--gold); }
+    .menu-toggle { display: none; color: white; background: #3f7636; border: 2px solid #152518; padding: 5px 10px; }
+    .hero {
+      position: relative; overflow: hidden; min-height: 480px; display: grid; place-items: center;
+      padding: 70px 5%; text-align: center; color: white;
+      background: linear-gradient(180deg, rgba(24,54,41,.25), rgba(24,54,41,.82)),
+        url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1800&q=85") center/cover;
+      border-bottom: 8px solid #795238;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: auto 0 0; height: 34px;
+      background: repeating-linear-gradient(90deg, #6aaa45 0 48px, #5c963d 48px 96px);
+      border-top: 5px solid #3f7636;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .tag {
+      display: inline-block; padding: 5px 12px; color: #20331e; background: var(--gold);
+      border: 3px solid #263322; box-shadow: 4px 4px 0 rgba(0,0,0,.25); font-size: 12px; font-weight: 900;
+    }
+    h1 { margin: 20px 0 10px; font-size: clamp(34px, 7vw, 66px); line-height: 1.15; text-shadow: 4px 4px #263322; }
+    h1 span { color: #d9ff9b; }
+    .hero p { max-width: 620px; margin: 0 auto; color: #fff8e8; text-shadow: 2px 2px #263322; }
+    .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+    .btn {
+      display: inline-block; cursor: pointer; text-align: center; text-decoration: none;
+      padding: 10px 16px; background: var(--grass); color: white; border: 3px solid #263322;
+      box-shadow: 4px 4px 0 #263322; font-weight: 900; transition: transform .12s, box-shadow .12s;
+    }
+    .btn:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 #263322; }
+    .btn.gold { background: var(--gold); color: #263322; }
+    .btn.dark { background: #263b2a; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 54px 5%; }
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: -1px; }
+    .stat { padding: 16px; text-align: center; background: var(--paper); border: 3px solid #263322; box-shadow: 4px 4px 0 rgba(38,51,34,.2); }
+    .stat strong { display: block; color: var(--grass-dark); font-size: 19px; }
+    .stat span { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .section-head { margin-bottom: 24px; }
+    .section-head .overline { color: var(--grass-dark); font-size: 11px; font-weight: 900; letter-spacing: 2px; }
+    h2 { margin: 4px 0 8px; font-size: clamp(25px, 4vw, 36px); line-height: 1.25; }
+    .section-head p { margin: 0; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+    .card { background: var(--paper); border: 3px solid #263322; box-shadow: 5px 5px 0 rgba(38,51,34,.25); overflow: hidden; }
+    .card-top { height: 125px; display: grid; place-items: center; font-size: 46px; background: #b6d997; border-bottom: 3px solid #263322; }
+    .card-top.dirt { background: linear-gradient(#8bbf5d 0 30%, #8b6341 30% 100%); }
+    .card-top.water { background: linear-gradient(#6bb8d2, #347b9b); }
+    .card-top.sun { background: linear-gradient(#f4d66b, #c7e6a4); }
+    .card-body { padding: 18px; }
+    .card h3 { margin: 0 0 8px; font-size: 19px; }
+    .card p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .pill { display: inline-block; padding: 2px 8px; margin: 0 4px 7px 0; background: #dcecc7; border: 2px solid #779c5a; color: #31532c; font-size: 11px; font-weight: 900; }
+    .card .btn { font-size: 13px; padding: 7px 10px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+    .panel { background: var(--panel); border: 3px solid #263322; box-shadow: 5px 5px 0 rgba(38,51,34,.2); padding: 24px; }
+    .steps { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    .steps li { position: relative; padding: 0 0 18px 48px; counter-increment: step; }
+    .steps li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0; padding: 3px 7px; background: var(--grass-dark); color: white; border: 2px solid #263322; font-weight: 900; }
+    .steps strong { display: block; }
+    .steps span { display: block; color: var(--muted); font-size: 13px; }
+    .news-item { display: grid; grid-template-columns: 90px 1fr; gap: 14px; padding: 15px 0; border-bottom: 2px dashed #c6b995; }
+    .news-item:last-child { border-bottom: 0; }
+    .datebox { align-self: start; padding: 8px 5px; text-align: center; background: #dcecc7; border: 2px solid #779c5a; font-size: 12px; font-weight: 900; }
+    .datebox small { display: block; color: var(--muted); font-size: 10px; }
+    .news-item h3 { margin: 0 0 3px; font-size: 16px; }
+    .news-item p { margin: 0; color: var(--muted); font-size: 13px; }
+    .community { color: white; background: #263b2a; border: 4px solid #172719; box-shadow: 6px 6px 0 rgba(38,51,34,.25); padding: 28px; }
+    .community p { color: #d1e0c9; }
+    .community .btn { margin: 5px 8px 0 0; }
+    .notice { padding: 12px 14px; background: #fff1bc; border-left: 5px solid #d59d23; color: #5e4a19; font-size: 12px; }
+    footer { padding: 28px 5%; background: #1b2c1e; color: #d1e0c9; border-top: 7px solid #795238; font-size: 12px; }
+    .footer-inner { max-width: 1180px; margin: auto; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    footer strong { color: white; }
+    @media(max-width: 800px) {
+      .topbar { flex-wrap: wrap; }
+      .menu-toggle { display: block; }
+      nav { display: none; width: 100%; padding: 10px 0 4px; }
+      nav.open { display: flex; }
+      nav a { padding: 5px 0; }
+      .grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .hero { min-height: 430px; }
+      .stats { gap: 7px; }
+      .stat { padding: 10px 4px; }
+      .stat strong { font-size: 14px; }
+      .stat span { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">
+      <span class="brand-icon" aria-hidden="true">▦</span>
+      <span>MINECRAFT · OPERATION<br>BLACK ZONE<small>PLAYER COMMUNITY</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav">☰ 菜单</button>
+    <nav id="mainNav" aria-label="主导航">
+      <a href="#packs">整合包下载</a>
+      <a href="#guide">安装教程</a>
+      <a href="#news">公告活动</a>
+      <a href="#community">玩家社区</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="tag">玩家社区 · 非官方项目</span>
+        <h1>MINECRAFT<br><span>OPERATION BLACK ZONE</span></h1>
+        <p>探索未知区域，搜集稀有物资，与队友一起行动。下载整合包，准备好进入你的方块世界。</p>
+        <div class="actions">
+          <a class="btn gold" href="#packs">▣ 获取整合包</a>
+          <a class="btn dark" href="#guide">▶ 新手入门</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap" style="padding-top:28px;padding-bottom:0">
+      <div class="stats">
+        <div class="stat"><strong>多版本支持</strong><span>查看每个整合包的版本要求</span></div>
+        <div class="stat"><strong>新手友好</strong><span>跟随安装教程快速开始</span></div>
+        <div class="stat"><strong>玩家共建</strong><span>关注公告并加入社区</span></div>
+      </div>
+    </div>
+
+    <section class="wrap" id="packs">
+      <div class="section-head">
+        <div class="overline">DOWNLOAD CENTER / 01</div>
+        <h2>整合包下载中心</h2>
+        <p>请先核对 Minecraft 版本、加载器和整合包说明，再开始下载。</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-top dirt" aria-hidden="true">▦</div>
+          <div class="card-body">
+            <span class="pill">Forge</span><span class="pill">1.16.5</span>
+            <h3>Black Zone · Legacy</h3>
+            <p>适用于旧版 Forge 环境。发布正式文件后，将下方链接替换成真实下载地址。</p>
+            <a class="btn" href="https://files.minecraftforge.net/" target="_blank" rel="noopener noreferrer">查看加载器 ↗</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top water" aria-hidden="true">◆</div>
+          <div class="card-body">
+            <span class="pill">Forge</span><span class="pill">1.20.1</span>
+            <h3>Black Zone · Tactical</h3>
+            <p>用于展示新版本整合包。请在此填写整合包版本号、更新日期和兼容模组说明。</p>
+            <a class="btn" href="https://files.minecraftforge.net/" target="_blank" rel="noopener noreferrer">查看加载器 ↗</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-top sun" aria-hidden="true">✦</div>
+          <div class="card-body">
+            <span class="pill">持续更新</span><span class="pill">其他版本</span>
+            <h3>更多版本 / 即将推出</h3>
+            <p>可在这里添加其他 Minecraft 版本、测试版或历史版本下载入口。</p>
+            <a class="btn" href="#community">关注更新</a>
+          </div>
+        </article>
+      </div>
+      <p class="notice" style="margin-top:22px">注意：上面的加载器链接不是整合包下载链接。发布时请替换为你自己实际上传的整合包文件或可信下载页面。</p>
+    </section>
+
+    <section class="wrap" id="guide">
+      <div class="section-head">
+        <div class="overline">QUICK START / 02</div>
+        <h2>新手安装教程</h2>
+        <p>从下载文件到成功启动，按步骤检查即可。</p>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <h3>▣ 安装步骤</h3>
+          <ol class="steps">
+            <li><strong>确认游戏版本</strong><span>查看整合包页面标注的 Minecraft 版本，例如 1.16.5 或 1.20.1。</span></li>
+            <li><strong>安装对应加载器</strong><span>根据整合包要求安装 Forge 或 Fabric，不要混用不兼容的版本。</span></li>
+            <li><strong>下载并解压（如需要）</strong><span>按整合包作者说明操作；压缩包、启动器整合包的安装方法可能不同。</span></li>
+            <li><strong>分配合适内存并启动</strong><span>先关闭占用内存的软件。若崩溃，保留错误日志以便排查。</span></li>
+            <li><strong>进入多人服务器</strong><span>只有在你拥有真实服务器地址且版本、模组匹配时，才能加入多人游戏。</span></li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h3>▣ 常见问题</h3>
+          <div class="news-item">
+            <div class="datebox">问题<small>01</small></div>
+            <div><h3>游戏启动就崩溃</h3><p>核对 Java 版本、加载器版本、模组依赖，并检查崩溃报告。</p></div>
+          </div>
+          <div class="news-item">
+            <div class="datebox">问题<small>02</small></div>
+            <div><h3>进服提示版本不一致</h3><p>客户端和服务器需要使用兼容的 Minecraft 版本、加载器和模组配置。</p></div>
+          </div>
+          <div class="news-item">
+            <div class="datebox">问题<small>03</small></div>
+            <div><h3>下载链接打不开</h3><p>确认链接是否公开、文件是否仍然存在，以及网盘是否需要授权。</p></div>
+          </div>
+          <div class="notice">建议只下载可信来源的文件，不要运行来历不明的启动器或脚本。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="news">
+      <div class="section-head">
+        <div class="overline">NEWS & EVENTS / 03</div>
+        <h2>公告、更新日志与活动</h2>
+        <p>以下为示例公告。请替换成真实发布日期和项目进展。</p>
+      </div>
+      <div class="panel">
+        <article class="news-item">
+          <div class="datebox">公告<small>置顶</small></div>
+          <div><h3>官网测试版上线</h3><p>欢迎玩家查看整合包信息。下载链接和社区邀请地址将在确认后更新。</p></div>
+        </article>
+        <article class="news-item">
+          <div class="datebox">更新<small>待填写日期</small></div>
+          <div><h3>整合包版本更新</h3><p>在此填写新增内容、修复问题、已知 Bug 和升级前注意事项。</p></div>
+        </article>
+        <article class="news-item">
+          <div class="datebox">活动<small>待填写日期</small></div>
+          <div><h3>玩家测试与反馈征集</h3><p>在此填写活动时间、参与方法、规则以及反馈渠道。</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="community">
+      <div class="community">
+        <div class="overline" style="color:#c7ef8e">JOIN THE COMMUNITY / 04</div>
+        <h2>加入玩家社区</h2>
+        <p>获取更新通知、交流模组问题、分享游戏截图，和其他玩家一起完善项目。</p>
+        <!-- 将下面的 # 替换成你自己的真实社区邀请链接 -->
+        <a class="btn gold" href="https://discord.com/" target="_blank" rel="noopener noreferrer">Discord 社区 ↗</a>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">项目与反馈 ↗</a>
+        <p style="font-size:12px;margin-bottom:0">尚未建立社区时，可以暂时保留这些示例入口，正式发布前请换成自己的邀请链接。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>Minecraft · Operation Black Zone</strong><br>玩家社区项目 · 非官方 Minecraft 网站</div>
+      <div>本项目与 Mojang Studios、Microsoft 没有官方关联。<br>© <span id="year"></span> Operation Black Zone</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const toggle = document.getElementById("menuToggle");
+    const nav = document.getElementById("mainNav");
+    toggle.addEventListener("click", () => {
+      const opened = nav.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(opened));
+    });
+    nav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  </script>
+</body>
+</html>
